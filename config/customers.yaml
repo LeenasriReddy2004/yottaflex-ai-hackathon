@@ -1,0 +1,50 @@
+
+dataset:
+  name: customers
+  description: Customer master dataset
+  version: 1
+
+source:
+  path: data/generated/customers_100k.csv
+  format: csv
+  encoding: utf-8
+  delimiter: ","
+
+schema:
+  columns:
+    customer_id:
+      type: integer
+      nullable: false
+    customer_name:
+      type: string
+      nullable: false
+    email:
+      type: string
+      nullable: false
+    city:
+      type: string
+      nullable: true
+    created_at:
+      type: datetime
+      nullable: false
+
+keys:
+  primary_key:
+    - customer_id
+  foreign_keys: []
+
+target:
+  database: output/warehouse.db
+  table: customers
+
+load:
+  mode: upsert
+  duplicate_policy: reject
+
+validation:
+  allow_extra_columns: false
+  trim_strings: true
+transformations:
+  customer_name: title
+  email: lowercase
+  city: title

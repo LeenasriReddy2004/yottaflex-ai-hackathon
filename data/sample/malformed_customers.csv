@@ -1,0 +1,4 @@
+customer_id,customer_name,email,city,created_at
+101,John,john@example.com,Hyderabad,2026-01-01
+102,David,david@example.com,Bangalore
+103,Sam,sam@example.com,Chennai,2026-01-03,EXTRA_VALUE

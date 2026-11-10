@@ -1,0 +1,53 @@
+
+dataset:
+  name: orders
+  description: Customer order transactions
+  version: 1
+
+source:
+  path: data/generated/orders_100k.csv
+  format: csv
+  encoding: utf-8
+  delimiter: ","
+
+schema:
+  columns:
+    order_id:
+      type: integer
+      nullable: false
+    customer_id:
+      type: integer
+      nullable: false
+    order_date:
+      type: datetime
+      nullable: false
+    amount:
+      type: float
+      nullable: false
+    status:
+      type: string
+      nullable: false
+
+keys:
+  primary_key:
+    - order_id
+  foreign_keys:
+    - column: customer_id
+      references:
+        dataset: customers
+        column: customer_id
+
+target:
+  database: output/warehouse.db
+  table: orders
+
+load:
+  mode: upsert
+  duplicate_policy: reject
+
+validation:
+  allow_extra_columns: false
+  trim_strings: true
+transformations:
+  status: lowercase
+  amount: round_2

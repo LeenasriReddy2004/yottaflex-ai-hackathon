@@ -1,0 +1,6 @@
+﻿customer_id,customer_name,email,city,created_at
+101,Rahul,rahul@gmail.com,Hyderabad,2026-01-01T10:00:00
+102,Priya,priya@gmail.com,Bangalore,2026-01-02T11:00:00
+103,Arjun,arjun@gmail.com,Chennai,2026-01-03T12:00:00
+104,Meena,meena@gmail.com,Hyderabad,2026-01-04T13:00:00
+105,Kiran,kiran@gmail.com,Pune,2026-01-05T14:00:00
