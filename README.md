@@ -86,7 +86,7 @@ Follow these steps to run the project on your system.
 ### Step 1: Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/LeenasriReddy2004/yottaflex-ai-hackathon.git
 cd yottaflex-ai-hackathon
 ```
 
