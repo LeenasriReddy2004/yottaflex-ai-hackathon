@@ -2,39 +2,39 @@
 
 ## About the Project
 
-This project was developed as part of the YottaFlex.ai Hackathon.
+I developed this project as part of the YottaFlex.ai Hackathon.
 
-The main idea behind this project is to make data loading easier and more reliable. Instead of writing separate code for every dataset, I built a system where the dataset details and rules are defined in YAML configuration files.
+While working on this project, my goal was to make the data loading process easier, more flexible, and reliable. Instead of writing separate code for every dataset, I wanted to build a system where I could manage different datasets using YAML configuration files.
 
-The pipeline reads the data, checks whether it is valid, applies the required transformations, and stores the processed records in a SQLite database.
+The pipeline reads the input data, checks it for errors, validates the records, applies the required transformations, and stores the processed data in a SQLite database.
 
-It also keeps track of rejected records and pipeline execution details, making it easier to understand what happened during each run.
+I also included features to handle rejected records and maintain audit logs so that each pipeline run can be monitored and reviewed.
 
 ## What Does This Project Do?
 
-The project includes the following features:
+Here are the main features I implemented:
 
-- Reads dataset details from YAML configuration files.
-- Loads data from CSV files.
+- Uses YAML configuration files to define dataset details and validation rules.
+- Reads data from CSV files.
 - Checks column names, data types, and required values.
 - Identifies duplicate records and invalid data.
-- Checks foreign key relationships between datasets.
-- Applies transformations such as changing text to lowercase or title case.
+- Validates foreign key relationships between datasets.
+- Applies transformations such as lowercase, title case, and rounding values.
 - Stores valid records in a SQLite database.
 - Supports append, replace, and upsert loading modes.
-- Keeps rejected records separately for further checking.
-- Maintains audit information for pipeline runs.
-- Generates sample datasets for testing with 100,000 records.
-- Includes a dashboard to monitor pipeline results and data quality.
+- Stores rejected records separately for further analysis.
+- Maintains audit information for pipeline executions.
+- Generates synthetic customer and order datasets with 100,000 records each.
+- Includes a Streamlit dashboard to monitor pipeline execution, data quality, and performance.
 
-## Technologies Used
+## Technologies I Used
 
-- Python – Main programming language.
-- Pandas – For handling and processing datasets.
-- PyYAML – For reading YAML configuration files.
-- SQLite – For storing processed data.
-- Streamlit – For building the dashboard.
-- Pytest – For testing the pipeline.
+- **Python:** For developing the complete data pipeline.
+- **Pandas:** For reading and processing datasets.
+- **PyYAML:** For loading and handling YAML configurations.
+- **SQLite:** For storing processed records.
+- **Streamlit:** For creating the project dashboard.
+- **Pytest:** For testing different pipeline scenarios.
 
 ## Project Folder Structure
 
@@ -48,10 +48,6 @@ yottaflex-ai-hackathon/
 ├── data/
 │   ├── generated/
 │   └── sample/
-│
-├── output/
-├── outputs/
-├── reports/
 │
 ├── src/
 │   ├── audit.py
@@ -76,10 +72,11 @@ yottaflex-ai-hackathon/
 ├── requirements.txt
 ├── DATA_DICTIONARY.md
 ├── DESIGN_NOTES.md
+├── .gitignore
 └── README.md
 ```
 
-## How to Set Up the Project
+## How to Run the Project
 
 Follow these steps to run the project on your system.
 
@@ -110,17 +107,17 @@ For Windows PowerShell:
 python -m pip install -r requirements.txt
 ```
 
-## Running the Project
+## Running the Pipeline
 
-The pipeline can be executed for each dataset using its YAML configuration.
+I configured separate YAML files for customers and orders. The pipeline can be executed using the following commands.
 
-**For customers:**
+**Customer Pipeline**
 
 ```bash
 python -c "from src.pipeline import run_pipeline; print(run_pipeline('config/customers.yaml'))"
 ```
 
-**For orders:**
+**Orders Pipeline**
 
 ```bash
 python -c "from src.pipeline import run_pipeline; print(run_pipeline('config/orders.yaml'))"
@@ -128,53 +125,80 @@ python -c "from src.pipeline import run_pipeline; print(run_pipeline('config/ord
 
 ## Running the Dashboard
 
-To start the dashboard, run:
+I also created a Streamlit dashboard to make it easier to monitor the pipeline.
+
+Run the following command:
 
 ```bash
 python -m streamlit run app.py
 ```
 
-After running the command, open the local URL shown in your terminal. Usually, it is:
+Open the local URL displayed in your terminal. Usually:
 
 `http://localhost:8501`
 
-The dashboard helps view pipeline execution, data quality information, performance details, and audit logs.
+The dashboard includes sections for:
+
+- Dashboard overview
+- Running pipelines
+- Data quality
+- Performance
+- Audit logs
+- Warehouse information
 
 ## Running the Tests
 
-To check whether the pipeline is working correctly, run:
+I used Pytest to check how the pipeline handles different situations.
+
+Run:
 
 ```bash
 python -m pytest -v
 ```
 
-The current test suite contains seven tests. They cover empty files, malformed files, duplicate records, missing required values, invalid foreign keys, repeated upsert loading, and delete-event handling.
+Currently, all seven automated tests are passing.
+
+The tests cover:
+
+1. Empty CSV files.
+2. Malformed CSV files.
+3. Duplicate primary keys.
+4. Missing required values.
+5. Invalid foreign key records.
+6. Repeated upsert loading without duplicate records.
+7. Delete-event handling.
 
 ## Testing with Large Datasets
 
-To check how the pipeline handles larger amounts of data, I generated sample customer and order datasets containing 100,000 records each.
+To check how the pipeline performs with larger datasets, I generated synthetic customer and order data containing 100,000 records each.
 
-This helps evaluate data processing, validation, database loading, and performance.
+This helped me test data ingestion, validation, transformation, database loading, and processing performance with larger inputs.
 
-The project also includes scripts for checking database records, testing idempotency, reconciling data, and generating performance reports.
+I also included separate scripts to check database records, test idempotency, perform reconciliation, and generate performance reports.
 
 ## Database
 
-The processed data is stored in a SQLite database:
+I used SQLite to store the processed data.
+
+The database file is created at:
 
 `output/warehouse.db`
 
-The project also maintains audit information about pipeline runs and stores rejected records separately.
+The pipeline also maintains audit information about its executions and stores rejected records separately.
 
 ## Additional Documentation
 
-- **DATA_DICTIONARY.md:** Explains the dataset columns and their purpose.
-- **DESIGN_NOTES.md:** Describes the design and implementation of the project.
+I have included two additional documents to explain the project in more detail:
 
-## Final Note
+- **DATA_DICTIONARY.md:** Contains information about the dataset columns and their purpose.
+- **DESIGN_NOTES.md:** Explains the overall design and implementation approach.
 
-While building this project, I focused on making the data loading process reusable, handling invalid records properly, and making sure that running the pipeline again does not unnecessarily create duplicate records.
+## What I Learned
 
-This project helped me understand how data ingestion, validation, transformation, database loading, testing, and monitoring work together in a real-world data pipeline.
+Building this project gave me practical experience in developing a data pipeline from the beginning.
 
-**Developed as part of the YottaFlex.ai Hackathon.**
+I learned how to work with YAML configurations, process large CSV datasets, validate data, handle duplicates and rejected records, load data into a database, and monitor pipeline execution.
+
+One of the main things I focused on was making the pipeline reusable and ensuring that repeated upsert runs do not unnecessarily create duplicate records.
+
+**Developed by Leenasri Reddy as part of the YottaFlex.ai Hackathon.**
